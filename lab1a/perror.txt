@@ -1,0 +1,29 @@
+begin
+	int 90a, b, c;
+	int maximum;
+
+	scanf(a);
+	scanf(b);
+	scanf(c);
+
+    if (a > b){
+        if (a > c){
+            maximum = a;
+        }
+        elf{
+            maximum = c;
+        }
+    }
+    else{
+        if (b ! c){
+            maximum = b;
+        }
+        else{
+            maximum = c;
+        }
+    }
+
+    printf("maximum is = %d\n", maximum);
+
+
+end
