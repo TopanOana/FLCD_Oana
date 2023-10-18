@@ -6,11 +6,11 @@ Alphabet:
 
 Lexic:
 	special symbols:
-		operators + - * = == < > <= >= -=  += *= /= !=
+		operators + - * = == < > <= >= !=
 
 	separators [] {} ; space ()
 
-	key words int char string scanf printf if else while begin end
+	keywords int char string scanf printf if else while begin end
 
 	identifiers 
 		<identifier>::= <letter> | <letter><sequence-of-characters>
