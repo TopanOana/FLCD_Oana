@@ -6,12 +6,17 @@
 <type>::= <basic-type> | <array-declaration>
 <basic-type>::= "int" | "char" | "string"
 <array-declaration>::= <basic-type> "[" <number> "]"
-<assignment-statement>::= <identifier> "=" <expression>
+<assignment-statement>::= <assigner> "=" <expression> 
+<assigner>::= <identifier> | <access-array>
+<access-array>::= <identifier> "[" <accesser> "]"
+<accesser>::= <number> | <identifier>
 <expression>::= <term> | <expression> <operator> <term>
-<operator>::= "+" | "-" | "*" | "/" | "%"
+<operator>::= <add-or-subtract> | <multiply-or-divide>
+<add-or-subtract>::= "+" | "-"
+<multiply-or-divide]::= "*" | "/" | "%"
 <term>::= <factor> | <term> <operator> <factor>  
-<factor>::= <identifier> | <constant> | "(" <expression> ")"
-<input-statement>::= "scanf" "(" <identifier> ")"
+<factor>::= <assigner> | <constant> | "(" <expression> ")"
+<input-statement>::= "scanf" "(" <assigner> ")"
 <output-statement>::= "printf" "(" <expression> ")"
 <structured-statement>::= <if-statement> | <while-statement>
 <if-statement>::= "if" "(" <condition> ")" "{" <statement-list> "}" "else" "{" <statement-list> "}"

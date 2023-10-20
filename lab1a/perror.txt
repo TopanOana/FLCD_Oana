@@ -1,5 +1,7 @@
 begin
-	int 90a, b, c;
+	int 90a;
+	int b;
+	int c;
 	int maximum;
 
 	scanf(a);
@@ -10,8 +12,8 @@ begin
         if (a > c){
             maximum = a;
         }
-        elf{
-            maximum = c;
+        else{
+            12maximum = c;
         }
     }
     else{
@@ -23,7 +25,7 @@ begin
         }
     }
 
-    printf("maximum is = %d\n", maximum);
+    printf(maximum);
 
 
 end
