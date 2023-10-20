@@ -1,12 +1,12 @@
 Alphabet:
 	upper and lower case letters of the English alphabet A-Za-z
 	decimal digits 0-9
-	special characters + - * / = == < > <= >= [] {} ; space () != " '
+	special characters + - * /  % = == < > <= >= [] {} ; space () != " '
 
 
 Lexic:
 	special symbols:
-		operators + - * = == < > <= >= !=
+		operators + - * = == < > <= >= != %
 
 	separators [] {} ; space ()
 
@@ -27,10 +27,14 @@ Lexic:
 		<non-zero-digit>::= 1 | 2 | ... | 9
 	  character
 		<constant-character>::= '<digit>' | '<letter>'
+		<letter>::= A | a | B | b | ... | Z | z
+		<digit>::= 0 | 1 | ... | 9
 	  string 
 		<constant-string>::= "" | "<string>"
-		<string>::= <character> | <character><string> 
-		
+		<string>::= <character> | <character><string>
+		<character>::= <letter> | <digit>		
+		<letter>::= A | a | B | b | ... | Z | z
+		<digit>::= 0 | 1 | ... | 9
 
 
 

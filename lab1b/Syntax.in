@@ -5,10 +5,10 @@
 <declaration-statement>::= <type> <identifier> 
 <type>::= <basic-type> | <array-declaration>
 <basic-type>::= "int" | "char" | "string"
-<array-declaration>:: <basic-type> [ <number> ]
+<array-declaration>::= <basic-type> "[" <number> "]"
 <assignment-statement>::= <identifier> "=" <expression>
 <expression>::= <term> | <expression> <operator> <term>
-<operator>::= "+" | "-" | "*" | "/"
+<operator>::= "+" | "-" | "*" | "/" | "%"
 <term>::= <factor> | <term> <operator> <factor>  
 <factor>::= <identifier> | <constant> | "(" <expression> ")"
 <input-statement>::= "scanf" "(" <identifier> ")"
