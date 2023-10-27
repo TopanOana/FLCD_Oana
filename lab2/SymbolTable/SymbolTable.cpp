@@ -5,8 +5,11 @@
 
 #include "SymbolTable.h"
 
+using namespace std;
+
+
 SymbolTable::SymbolTable() {
-    hashTable = *new HashTable<string>();
+    hashTable = HashTable<string>();
 }
 
 int SymbolTable::position(string token) {
