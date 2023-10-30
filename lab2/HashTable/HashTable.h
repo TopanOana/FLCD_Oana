@@ -7,33 +7,41 @@
 #define LAB2_HASHTABLE_H
 
 using namespace std;
+
 #include <vector>
 
-template <class T>
-struct Entry{
+template<class T>
+struct Entry {
     T token;
     int nextPosition = -1;
 };
 
 
-template <class T>
+template<class T>
 class HashTable {
 private :
     vector<Entry<T>> table;
     int size = 101; //prime number
 
     int hashFunction(T element);
-    int nextEmptyPosition();
 
+    int nextEmptyPosition();
 
 
 public:
     HashTable();
+
     HashTable(HashTable &ht);
+
     int addValue(T element);
+
     int position(T element);
+
     int removeValue(T element);
+
     int containsValue(T element);
+
+    string toString();
 
 };
 
@@ -42,8 +50,8 @@ template<class T>
 int HashTable<T>::hashFunction(T element) {
     int sum = 0;
 
-    for (char i : element){
-        sum += (int)i;
+    for (char i: element) {
+        sum += (int) i;
     }
 
     return sum % size;
@@ -57,19 +65,18 @@ HashTable<T>::HashTable() {
 template<class T>
 int HashTable<T>::position(T element) {
     int hashValue = hashFunction(element);
-    while (element != table[hashValue].token && table[hashValue].nextPosition != -1){
+    while (element != table[hashValue].token && table[hashValue].nextPosition != -1) {
         hashValue = table[hashValue].nextPosition;
     }
 
     if (element == table[hashValue].token)
         return hashValue;
-    else{
-        if (table[hashValue].token == ""){
+    else {
+        if (table[hashValue].token == "") {
             table[hashValue].token = element;
             table[hashValue].nextPosition = -1;
             return hashValue;
-        }
-        else {
+        } else {
             int newPosition = addValue(element);
             table[hashValue].nextPosition = newPosition;
             return newPosition;
@@ -77,10 +84,11 @@ int HashTable<T>::position(T element) {
     }
 }
 
+
 template<class T>
 int HashTable<T>::nextEmptyPosition() {
-    for (int i = 0 ; i < table.size() ; i++){
-        if ( table[i].token == "")
+    for (int i = 0; i < table.size(); i++) {
+        if (table[i].token == "")
             return i;
     }
     return -1;
@@ -99,14 +107,13 @@ int HashTable<T>::addValue(T element) {
 template<class T>
 int HashTable<T>::removeValue(T element) {
     int position = containsValue(element);
-    if (table[position].nextPosition == -1){
+    if (table[position].nextPosition == -1) {
         table[position].token = "";
         return position;
-    }
-    else{
+    } else {
         int hashValue = hashFunction(element);
 
-        while (table[hashValue].nextPosition != position){
+        while (table[hashValue].nextPosition != position) {
             hashValue = table[hashValue].nextPosition;
         }
 
@@ -120,11 +127,11 @@ int HashTable<T>::removeValue(T element) {
 template<class T>
 int HashTable<T>::containsValue(T element) {
     int hashValue = hashFunction(element);
-    while (element != table[hashValue].token && table[hashValue].nextPosition != -1){
+    while (element != table[hashValue].token && table[hashValue].nextPosition != -1) {
         hashValue = table[hashValue].nextPosition;
     }
 
-    if(element == table[hashValue].token)
+    if (element == table[hashValue].token)
         return hashValue;
     return -1;
 }
@@ -134,5 +141,19 @@ HashTable<T>::HashTable(HashTable &ht) {
     this->table = ht.table;
     this->size = ht.size;
 }
+
+template<class T>
+string HashTable<T>::toString() {
+    string output = "";
+
+    for (int i = 0; i < size; i++) {
+        if (table[i].token != "") {
+            output += to_string(i) + " " + table[i].token  + "\n";
+        }
+    }
+
+    return output;
+}
+
 
 #endif //LAB2_HASHTABLE_H

@@ -28,6 +28,8 @@ public:
 
     int addToken(string token);
 
+    string toString();
+
 
 
 

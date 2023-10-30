@@ -23,3 +23,7 @@ int SymbolTable::removeToken(string token) {
 int SymbolTable::addToken(string token) {
     return hashTable.addValue(token);
 }
+
+string SymbolTable::toString() {
+    return hashTable.toString();
+}

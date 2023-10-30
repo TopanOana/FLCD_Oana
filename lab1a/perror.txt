@@ -1,5 +1,5 @@
 begin
-	int 90a;
+	int a;
 	int b;
 	int c;
 	int maximum;
@@ -13,7 +13,7 @@ begin
             maximum = a;
         }
         else{
-            12maximum = c;
+            maximum = c;
         }
     }
     else{

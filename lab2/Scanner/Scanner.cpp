@@ -2,4 +2,153 @@
 // Created by oanam on 10/27/2023.
 //
 
+#include <regex>
+#include <iostream>
+#include <algorithm>
+#include <locale>
+#include <functional>
+#include <string>
 #include "Scanner.h"
+
+Scanner::Scanner() {
+    populateTokens();
+}
+
+void Scanner::scanningAlgorithm(string filepath) {
+    //opening input file
+    ifstream inputFile;
+    inputFile.open(filepath);
+
+    vector<string> listOfTokens;
+    char *separators = "([{}]);";
+
+    char *operators = "!=<>+-*/%";
+
+    char line[100];
+    int lineNumber = 1;
+    while (inputFile.getline(line, 100)) {
+        //scanning each line character by character in order to construct the tokens:
+        int lengthOfLine = strlen(line);
+        string currentToken;
+        for (int j = 0; j < lengthOfLine; j++) {
+            char c = line[j];
+            //the end of a token
+            if (strchr("\n\t ", c) != nullptr) {
+                if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
+                    inputFile.close();
+                    exit(1);
+                }
+
+                currentToken.clear();
+            } else if (strchr(separators, c) != nullptr) {
+                if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
+                    inputFile.close();
+                    exit(1);
+                }
+
+                currentToken.clear();
+                string nou;
+                nou.push_back(c);
+                if (addTokenToPIF(nou, lineNumber) != 1)
+                    exit(1);
+            } else if (strchr(operators, c) != nullptr) {
+                if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
+                    inputFile.close();
+                    exit(1);
+                }
+                currentToken.clear();
+                if (strchr("+-", c) != nullptr && j + 1 < lengthOfLine && isdigit(line[j + 1]) != 0) {
+                    currentToken.push_back(c);
+                } else {
+                    string nou;
+                    nou.push_back(c);
+                    if (j + 1 < lengthOfLine && line[j + 1] == '=') {
+                        nou.push_back('=');
+                        j++;
+                    }
+                    if (addTokenToPIF(nou, lineNumber) != 1) {
+                        inputFile.close();
+                        exit(1);
+                    }
+                }
+
+
+            } else {
+                currentToken.push_back(c);
+            }
+
+        }
+
+        if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
+            inputFile.close();
+            exit(1);
+        }
+        currentToken.clear();
+
+        lineNumber++;
+    }
+
+    inputFile.close();
+    cout << "lexically correct" << endl;
+    writeToOutputFiles();
+
+}
+
+void Scanner::populateTokens() {
+    ifstream tokenFile;
+    tokenFile.open("C://Users//oanam//Desktop//LFTC//lab1b//token.in");
+
+    char current_token[10];
+    while (tokenFile.getline(current_token, 10)) {
+        string auxiliar = current_token;
+        auxiliar.erase(std::remove_if(auxiliar.begin(),
+                                      auxiliar.end(),
+                                      std::bind(std::isspace<char>,
+                                                std::placeholders::_1,
+                                                std::locale::classic())),
+                       auxiliar.end());
+
+        tokens.push_back(auxiliar);
+    }
+
+    tokenFile.close();
+}
+
+int Scanner::addTokenToPIF(string token, int lineNumber) {
+    if (std::find(tokens.begin(), tokens.end(), token) != tokens.end()) {
+        programmingInternalForm.emplace_back(make_pair(token, -1));
+    } else if (regex_match(token, regex(regexForCharacterConstants)) ||
+               regex_match(token, regex(regexForStringConstants)) ||
+               regex_match(token, regex(regexForIntegerConstants))) {
+        int position = symbolTable.position(token);
+        programmingInternalForm.emplace_back(make_pair("const", position));
+    } else if (regex_match(token, regex(regexForIdentifiers))) {
+        int position = symbolTable.position(token);
+        programmingInternalForm.emplace_back(make_pair("id", position));
+    } else {
+        cout << "Lexical error! Unidentified token " + token + " on line " << lineNumber << endl;
+        return -1;
+    }
+    return 1;
+}
+
+void Scanner::writeToOutputFiles() {
+    ofstream symbolTableOutput;
+    ofstream programmingInternalFormOutput;
+
+    symbolTableOutput.open("C://Users//oanam//Desktop//LFTC//lab2//ST.out");
+    programmingInternalFormOutput.open("C://Users//oanam//Desktop//LFTC//lab2//PIF.out");
+
+    string symbolTbl = symbolTable.toString();
+    const char *headerST = "Symbol table represented as a hash table with separate chaining.\nSymbol Table:\n";
+
+    symbolTableOutput << headerST;
+    symbolTableOutput << symbolTbl;
+
+    for (auto &i: programmingInternalForm) {
+        programmingInternalFormOutput << i.first << " " << i.second << "\n";
+    }
+
+    symbolTableOutput.close();
+    programmingInternalFormOutput.close();
+}
