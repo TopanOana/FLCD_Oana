@@ -27,7 +27,7 @@ void Scanner::scanningAlgorithm(string filepath) {
     char line[100];
     int lineNumber = 1;
     while (inputFile.getline(line, 100)) {
-        //scanning each line character by character in order to construct the tokens:
+        //scanning each line character by character in order to construct the keywords:
         int lengthOfLine = strlen(line);
         string currentToken;
         for (int j = 0; j < lengthOfLine; j++) {
@@ -108,14 +108,14 @@ void Scanner::populateTokens() {
                                                 std::locale::classic())),
                        auxiliar.end());
 
-        tokens.push_back(auxiliar);
+        keywords.push_back(auxiliar);
     }
 
     tokenFile.close();
 }
 
 int Scanner::addTokenToPIF(string token, int lineNumber) {
-    if (std::find(tokens.begin(), tokens.end(), token) != tokens.end()) {
+    if (std::find(keywords.begin(), keywords.end(), token) != keywords.end()) {
         programmingInternalForm.emplace_back(make_pair(token, -1));
     } else if (regex_match(token, regex(regexForCharacterConstants)) ||
                regex_match(token, regex(regexForStringConstants)) ||

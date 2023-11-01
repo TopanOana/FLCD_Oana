@@ -13,7 +13,7 @@ class Scanner {
 private:
     SymbolTable symbolTable; //1a
     std::vector<pair<string, int>> programmingInternalForm;
-    std::vector<string> tokens;
+    std::vector<string> keywords;
 
     string regexForIdentifiers = "[a-zA-Z]{1}[a-zA-Z0-9]*";
     string regexForCharacterConstants = "\'[a-zA-Z0-9]{1}\'";
