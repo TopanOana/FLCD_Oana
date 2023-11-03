@@ -16,6 +16,7 @@ Scanner::Scanner() {
 
 void Scanner::scanningAlgorithm(string filepath) {
     //opening input file
+    bool correct = true;
     ifstream inputFile;
     inputFile.open(filepath);
 
@@ -35,26 +36,33 @@ void Scanner::scanningAlgorithm(string filepath) {
             //the end of a token
             if (strchr("\n\t ", c) != nullptr) {
                 if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
-                    inputFile.close();
-                    exit(1);
+//                    inputFile.close();
+//                    exit(1);
+                    correct = false;
                 }
 
                 currentToken.clear();
             } else if (strchr(separators, c) != nullptr) {
                 if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
-                    inputFile.close();
-                    exit(1);
+//                    inputFile.close();
+//                    exit(1);
+                    correct = false;
                 }
 
                 currentToken.clear();
                 string nou;
                 nou.push_back(c);
-                if (addTokenToPIF(nou, lineNumber) != 1)
-                    exit(1);
+                if (addTokenToPIF(nou, lineNumber) != 1) {
+//                    exit(1);
+//                    inputFile.close();
+                    correct = false;
+                }
+
             } else if (strchr(operators, c) != nullptr) {
                 if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
-                    inputFile.close();
-                    exit(1);
+//                    inputFile.close();
+//                    exit(1);
+                    correct = false;
                 }
                 currentToken.clear();
                 if (strchr("+-", c) != nullptr && j + 1 < lengthOfLine && isdigit(line[j + 1]) != 0) {
@@ -67,8 +75,9 @@ void Scanner::scanningAlgorithm(string filepath) {
                         j++;
                     }
                     if (addTokenToPIF(nou, lineNumber) != 1) {
-                        inputFile.close();
-                        exit(1);
+//                        inputFile.close();
+//                        exit(1);
+                        correct = false;
                     }
                 }
 
@@ -80,8 +89,9 @@ void Scanner::scanningAlgorithm(string filepath) {
         }
 
         if (!currentToken.empty() && addTokenToPIF(currentToken, lineNumber) != 1) {
-            inputFile.close();
-            exit(1);
+//            inputFile.close();
+//            exit(1);
+            correct = false;
         }
         currentToken.clear();
 
@@ -89,7 +99,8 @@ void Scanner::scanningAlgorithm(string filepath) {
     }
 
     inputFile.close();
-    cout << "lexically correct" << endl;
+    if (correct)
+        cout << "lexically correct" << endl;
     writeToOutputFiles();
 
 }
