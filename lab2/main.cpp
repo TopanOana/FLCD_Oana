@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
     Scanner scanner ;
-    scanner.scanningAlgorithm("C:/Users/oanam/Desktop/LFTC/lab1a/p3.txt");
+    scanner.scanningAlgorithm("C:/Users/oanam/Desktop/LFTC/lab1a/p1.txt");
 
 
     std::cout << "Hello, World!" << std::endl;

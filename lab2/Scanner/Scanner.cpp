@@ -151,7 +151,7 @@ void Scanner::writeToOutputFiles() {
     programmingInternalFormOutput.open("C://Users//oanam//Desktop//LFTC//lab2//PIF.out");
 
     string symbolTbl = symbolTable.toString();
-    const char *headerST = "Symbol table represented as a hash table with separate chaining.\nSymbol Table:\nPosition | Token\n";
+    const char *headerST = "Symbol table represented as a hash table with coalesced chaining.\nSymbol Table for both constants and identifiers:\nPosition | Token\n";
 
     symbolTableOutput << headerST;
     symbolTableOutput << symbolTbl;

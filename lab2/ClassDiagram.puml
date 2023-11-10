@@ -45,8 +45,8 @@ class Scanner{
     + void scanningAlgorithm(string filepath)
 }
 
-SymbolTable -- Scanner : 1
-HashTable -- SymbolTable : 1
+SymbolTable --* Scanner : 1
+HashTable --* SymbolTable : 1
 
 Entry --*  HashTable : 0..*
 
