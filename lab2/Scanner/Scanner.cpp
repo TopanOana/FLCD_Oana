@@ -5,7 +5,7 @@
 #include <regex>
 #include <iostream>
 #include <algorithm>
-#include <locale>
+
 #include <functional>
 #include <string>
 #include "Scanner.h"
@@ -99,9 +99,10 @@ void Scanner::scanningAlgorithm(string filepath) {
     }
 
     inputFile.close();
-    if (correct)
+    if (correct) {
         cout << "lexically correct" << endl;
-    writeToOutputFiles();
+        writeToOutputFiles();
+    }
 
 }
 
@@ -123,17 +124,24 @@ void Scanner::populateTokens() {
     }
 
     tokenFile.close();
+
+    integerFA.readFromFile();
+    identifierFA.readFromFile();
 }
 
 int Scanner::addTokenToPIF(string token, int lineNumber) {
     if (std::find(keywords.begin(), keywords.end(), token) != keywords.end()) {
         programmingInternalForm.emplace_back(make_pair(token, -1));
     } else if (regex_match(token, regex(regexForCharacterConstants)) ||
-               regex_match(token, regex(regexForStringConstants)) ||
-               regex_match(token, regex(regexForIntegerConstants))) {
+               regex_match(token, regex(regexForStringConstants))) {//||
+//               regex_match(token, regex(regexForIntegerConstants))) {
         int position = symbolTable.position(token);
         programmingInternalForm.emplace_back(make_pair("const", position));
-    } else if (regex_match(token, regex(regexForIdentifiers))) {
+    } else if (integerFA.checkSequence(token)) {
+        int position = symbolTable.position(token);
+        programmingInternalForm.emplace_back(make_pair("const", position));
+//    } else if (regex_match(token, regex(regexForIdentifiers))) {
+    } else if (identifierFA.checkSequence(token)) {
         int position = symbolTable.position(token);
         programmingInternalForm.emplace_back(make_pair("id", position));
     } else {

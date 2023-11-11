@@ -5,6 +5,7 @@
 #include <fstream>
 #include <cstring>
 #include <iostream>
+#include <algorithm>
 #include "FiniteAutomaton.h"
 
 using namespace std;
@@ -27,8 +28,8 @@ void FiniteAutomaton::readFromFile() {
     }
 
     //read alphabet
-    char alphabet[100];
-    inputStream.getline(alphabet, 100);
+    char alphabet[1024];
+    inputStream.getline(alphabet, 1024);
     for (int j = 0; j < strlen(alphabet) ; j++) {
         if (alphabet[j] != ',') {
             string aux = "";
@@ -97,18 +98,21 @@ void FiniteAutomaton::displayElements() {
 }
 
 bool FiniteAutomaton::checkSequence(std::string sequence) {
-    if (sequence.length()==0)
+    if (sequence.empty()){
+        if (std::find(final_states.begin(), final_states.end(),initial_state) != final_states.end()) // if the sequence is empty and the initial state is also a final one
+            return true;
         return false;
+    }
 
 
     //starting from initial state
     string currentState = this->initial_state;
 
     //going through the sequence
-    for (int i = 0; i < sequence.length(); i++){
+    for (char i : sequence){
         //get transition from current state to any other state with value sequence[i]
         string value ;
-        value.push_back(sequence[i]);
+        value.push_back(i);
         Transition currentTransition = findTransitionBySourceAndValue(currentState,value);
         if (currentTransition.source_state.empty()){
             return false;
@@ -116,8 +120,10 @@ bool FiniteAutomaton::checkSequence(std::string sequence) {
         currentState = currentTransition.destination_state;
     }
 
+    if (std::find(final_states.begin(), final_states.end(),currentState) != final_states.end())
+        return true;
 
-    return true;
+    return false;
 }
 
 Transition FiniteAutomaton::findTransitionBySourceAndValue(std::string source, std::string value) {

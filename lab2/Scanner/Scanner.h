@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include "../SymbolTable/SymbolTable.h"
+#include "../FiniteAutomata/FiniteAutomaton.h"
 
 class Scanner {
 private:
@@ -19,6 +20,9 @@ private:
     string regexForCharacterConstants = "\'[a-zA-Z0-9]{1}\'";
     string regexForStringConstants = "\"[a-zA-Z0-9]*\"";
     string regexForIntegerConstants = "([+-]?[1-9][0-9]*|0)";
+
+    FiniteAutomaton integerFA = FiniteAutomaton("C:\\Users\\oanam\\Desktop\\LFTC\\lab2\\IntegerFA.in");
+    FiniteAutomaton identifierFA = FiniteAutomaton("C:\\Users\\oanam\\Desktop\\LFTC\\lab2\\IdentifierFA.in");
 
     void populateTokens();
 
