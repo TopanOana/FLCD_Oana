@@ -38,6 +38,16 @@ public:
 
     bool checkSequence(std::string sequence);
 
+    std::string displayStates();
+
+    std::string displayAlphabet();
+
+    std::string displayInitialState();
+
+    std::string displayFinalStates();
+
+    std::string displayTransitions();
+
 
 };
 

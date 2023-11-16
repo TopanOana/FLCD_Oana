@@ -18,7 +18,7 @@ void FiniteAutomaton::readFromFile() {
     char states[100];
     inputStream.getline(states, 100);
     int i = 0;
-    while (i < strlen(states) ) {
+    while (i < strlen(states)) {
         if (states[i] != ',') {
             string aux = "";
             aux.push_back(states[i]);
@@ -30,7 +30,7 @@ void FiniteAutomaton::readFromFile() {
     //read alphabet
     char alphabet[1024];
     inputStream.getline(alphabet, 1024);
-    for (int j = 0; j < strlen(alphabet) ; j++) {
+    for (int j = 0; j < strlen(alphabet); j++) {
         if (alphabet[j] != ',') {
             string aux = "";
             aux.push_back(alphabet[j]);
@@ -98,8 +98,9 @@ void FiniteAutomaton::displayElements() {
 }
 
 bool FiniteAutomaton::checkSequence(std::string sequence) {
-    if (sequence.empty()){
-        if (std::find(final_states.begin(), final_states.end(),initial_state) != final_states.end()) // if the sequence is empty and the initial state is also a final one
+    if (sequence.empty()) {
+        if (std::find(final_states.begin(), final_states.end(), initial_state) !=
+            final_states.end()) // if the sequence is empty and the initial state is also a final one
             return true;
         return false;
     }
@@ -109,27 +110,65 @@ bool FiniteAutomaton::checkSequence(std::string sequence) {
     string currentState = this->initial_state;
 
     //going through the sequence
-    for (char i : sequence){
+    for (char i: sequence) {
         //get transition from current state to any other state with value sequence[i]
-        string value ;
+        string value;
         value.push_back(i);
-        Transition currentTransition = findTransitionBySourceAndValue(currentState,value);
-        if (currentTransition.source_state.empty()){
+        Transition currentTransition = findTransitionBySourceAndValue(currentState, value);
+        if (currentTransition.source_state.empty()) {
             return false;
         }
         currentState = currentTransition.destination_state;
     }
 
-    if (std::find(final_states.begin(), final_states.end(),currentState) != final_states.end())
+    if (std::find(final_states.begin(), final_states.end(), currentState) != final_states.end())
         return true;
 
     return false;
 }
 
 Transition FiniteAutomaton::findTransitionBySourceAndValue(std::string source, std::string value) {
-    for (const auto &item: this->transitions){
+    for (const auto &item: this->transitions) {
         if (item.source_state == source && item.value == value)
             return item;
     }
     return Transition();
 }
+
+std::string FiniteAutomaton::displayStates() {
+    string setOfStates;
+    for (const auto &item: states) {
+        setOfStates += item + " ";
+    }
+    return setOfStates;
+}
+
+std::string FiniteAutomaton::displayAlphabet() {
+    string alphabetString;
+    for (const auto &item: alphabet) {
+        alphabetString += item + " ";
+    }
+    return alphabetString;
+}
+
+std::string FiniteAutomaton::displayInitialState() {
+    return initial_state;
+}
+
+std::string FiniteAutomaton::displayFinalStates() {
+    string setOfFinalStates;
+    for (const auto &item: final_states) {
+        setOfFinalStates += item + " ";
+    }
+    return setOfFinalStates;
+}
+
+std::string FiniteAutomaton::displayTransitions() {
+    string allTransitions;
+    for (const auto &item: this->transitions) {
+        allTransitions += "(" + item.source_state + "," + item.value + ") = " + item.destination_state + "\n";
+    }
+    return allTransitions;
+}
+
+
