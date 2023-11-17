@@ -29,14 +29,20 @@ void printFADisplayMenu() {
 }
 
 
-void checkSequence(FiniteAutomaton finiteAutomaton){
+void checkSequence(FiniteAutomaton finiteAutomaton) {
     string sequence;
     std::cout << "Enter the sequence: ";
     std::cin >> sequence;
-    if (finiteAutomaton.checkSequence(sequence)) {
-        std::cout << "sequence " << sequence << " is accepted by the FA\n";
-    } else {
-        std::cout << "sequence " << sequence << " is not accepted by the FA\n";
+    int value = finiteAutomaton.checkSequence(sequence);
+    switch (value) {
+        case 1:
+            std::cout << "sequence " << sequence << " is accepted by the FA\n";
+            break;
+        case 0 :
+            std::cout << "sequence " << sequence << " is not accepted by the FA\n";
+            break;
+        case -1:
+            std::cout << "the FA is not a DFA\n";
     }
 }
 

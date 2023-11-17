@@ -27,6 +27,8 @@ private:
 
     Transition findTransitionBySourceAndValue(std::string source, std::string value);
 
+    bool checkDFA();
+
 public:
     FiniteAutomaton(std::string filepath) {
         this->filepath = filepath;
@@ -36,7 +38,7 @@ public:
 
     void displayElements();
 
-    bool checkSequence(std::string sequence);
+    int checkSequence(std::string sequence);
 
     std::string displayStates();
 

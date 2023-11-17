@@ -97,12 +97,14 @@ void FiniteAutomaton::displayElements() {
 
 }
 
-bool FiniteAutomaton::checkSequence(std::string sequence) {
+int FiniteAutomaton::checkSequence(std::string sequence) {
+    if (!checkDFA())
+        return -1;
     if (sequence.empty()) {
         if (std::find(final_states.begin(), final_states.end(), initial_state) !=
             final_states.end()) // if the sequence is empty and the initial state is also a final one
-            return true;
-        return false;
+            return 1;
+        return 0;
     }
 
 
@@ -116,15 +118,15 @@ bool FiniteAutomaton::checkSequence(std::string sequence) {
         value.push_back(i);
         Transition currentTransition = findTransitionBySourceAndValue(currentState, value);
         if (currentTransition.source_state.empty()) {
-            return false;
+            return 0;
         }
         currentState = currentTransition.destination_state;
     }
 
     if (std::find(final_states.begin(), final_states.end(), currentState) != final_states.end())
-        return true;
+        return 1;
 
-    return false;
+    return 0;
 }
 
 Transition FiniteAutomaton::findTransitionBySourceAndValue(std::string source, std::string value) {
@@ -169,6 +171,17 @@ std::string FiniteAutomaton::displayTransitions() {
         allTransitions += "(" + item.source_state + "," + item.value + ") = " + item.destination_state + "\n";
     }
     return allTransitions;
+}
+
+bool FiniteAutomaton::checkDFA() {
+    for (int i = 0; i < transitions.size(); i++)
+        for (int j = i + 1; j <= transitions.size(); j++) {
+            Transition t1 = transitions[i];
+            Transition t2 = transitions[j];
+            if (t1.source_state == t2.source_state && t1.value==t2.value && t1.destination_state!=t2.destination_state)
+                return false;
+        }
+    return true;
 }
 
 

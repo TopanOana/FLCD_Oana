@@ -137,11 +137,11 @@ int Scanner::addTokenToPIF(string token, int lineNumber) {
 //               regex_match(token, regex(regexForIntegerConstants))) {
         int position = symbolTable.position(token);
         programmingInternalForm.emplace_back(make_pair("const", position));
-    } else if (integerFA.checkSequence(token)) {
+    } else if (integerFA.checkSequence(token)==1) {
         int position = symbolTable.position(token);
         programmingInternalForm.emplace_back(make_pair("const", position));
 //    } else if (regex_match(token, regex(regexForIdentifiers))) {
-    } else if (identifierFA.checkSequence(token)) {
+    } else if (identifierFA.checkSequence(token)==1) {
         int position = symbolTable.position(token);
         programmingInternalForm.emplace_back(make_pair("id", position));
     } else {
