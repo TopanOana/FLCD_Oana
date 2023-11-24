@@ -174,11 +174,12 @@ std::string FiniteAutomaton::displayTransitions() {
 }
 
 bool FiniteAutomaton::checkDFA() {
-    for (int i = 0; i < transitions.size(); i++)
-        for (int j = i + 1; j <= transitions.size(); j++) {
+    for (int i = 0; i < transitions.size() - 1; i++)
+        for (int j = i + 1; j < transitions.size(); j++) {
             Transition t1 = transitions[i];
             Transition t2 = transitions[j];
-            if (t1.source_state == t2.source_state && t1.value==t2.value && t1.destination_state!=t2.destination_state)
+            if (t1.source_state == t2.source_state && t1.value == t2.value &&
+                t1.destination_state != t2.destination_state)
                 return false;
         }
     return true;
