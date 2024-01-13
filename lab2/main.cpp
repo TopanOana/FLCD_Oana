@@ -92,7 +92,7 @@ int main() {
         } while (value != '3');
     } else {
         Scanner scanner;
-        scanner.scanningAlgorithm("C:/Users/oanam/Desktop/LFTC/lab1a/p3.txt");
+        scanner.scanningAlgorithm("D:\\UniversityWork\\FLCD_Oana\\lab2\\paux.txt");
     }
 //    FiniteAutomaton finiteAutomaton("C:\\Users\\oanam\\Desktop\\LFTC\\lab2\\IdentifierFA.in");
 //    finiteAutomaton.readFromFile();

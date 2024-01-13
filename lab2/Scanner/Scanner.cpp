@@ -109,7 +109,7 @@ void Scanner::scanningAlgorithm(string filepath) {
 
 void Scanner::populateTokens() {
     ifstream tokenFile;
-    tokenFile.open("C://Users//oanam//Desktop//LFTC//lab1b//token.in");
+    tokenFile.open("D:\\UniversityWork\\FLCD_Oana\\lab1b\\token.in");
 
     char current_token[10];
     while (tokenFile.getline(current_token, 10)) {
@@ -156,8 +156,8 @@ void Scanner::writeToOutputFiles() {
     ofstream symbolTableOutput;
     ofstream programmingInternalFormOutput;
 
-    symbolTableOutput.open("C://Users//oanam//Desktop//LFTC//lab2//ST.out");
-    programmingInternalFormOutput.open("C://Users//oanam//Desktop//LFTC//lab2//PIF.out");
+    symbolTableOutput.open("D:\\UniversityWork\\FLCD_Oana\\lab2\\ST1.out");
+    programmingInternalFormOutput.open("D:\\UniversityWork\\FLCD_Oana\\lab2\\PIF1.out");
 
     string symbolTbl = symbolTable.toString();
     const char *headerST = "Symbol table represented as a hash table with coalesced chaining.\nSymbol Table for both constants and identifiers:\nPosition | Token\n";
